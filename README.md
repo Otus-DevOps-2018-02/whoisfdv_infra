@@ -3,7 +3,8 @@ whoisfdv Infra repository
 
 # Hostwork 4 (GCP Bastion)
 
-bastion_IP = 104.155.21.19 someinternalhost_IP = 10.132.0.3
+bastion_IP = 104.155.21.19
+someinternalhost_IP = 10.132.0.3
 
 Для подключения к someinternalhost одной командой, требуется настроить "Jumphost" через bastion.
 Для этого требуется следующая конфигурация SSH:
