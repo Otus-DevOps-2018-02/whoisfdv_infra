@@ -1,12 +1,12 @@
 # whoisfdv_infra
 whoisfdv Infra repository
 
-# Hostwork 4 (GCP Bastion)
+## Homework 4 (GCP Bastion)
 
 bastion_IP = 104.155.21.19
 someinternalhost_IP = 10.132.0.3
 
-Для подключения к someinternalhost одной командой, требуется настроить "Jumphost" через bastion.
+Для подключения к someinternalhost одной командой, требуется настроить _Jumphost_ через bastion.
 Для этого требуется следующая конфигурация SSH:
 
 ```
@@ -25,4 +25,66 @@ Host someinternalhost
   ProxyCommand ssh -q -W %h:%p bastion
 ```
 
-После чего для подключения достаточно команды: `ssh someinternalhost`
+После чего для подключения достаточно команды: ```ssh someinternalhost```
+
+## Homework 5 (GCP testApp)
+
+testapp_IP = 35.205.96.5
+testapp_port = 9292
+
+#### Самостоятельное задание
+
+В рамках дополнительного задания был создан `startup_script.sh`, приводятся 3 варианта его использования и пример удаления/добавления правил firewall через gcloud.
+
+###### --metadata-from-file startup-script=FILE
+
+```
+# gcloud compute instances create reddit-app\
+  --boot-disk-size=10GB \
+  --image-family ubuntu-1604-lts \
+  --image-project=ubuntu-os-cloud \
+  --machine-type=g1-small \
+  --tags puma-server \
+  --restart-on-failure \
+  --metadata-from-file startup-script=./startup_script.sh
+```
+
+###### --metadata-from-file startup-script=URL
+
+Сначала вручную добавляем `gist` на стороне собственного GitHub аккаунта, для дальнейшего его использрвания по URL.
+
+```
+# gcloud compute instances create reddit-app\ 
+  --boot-disk-size=10GB \
+  --image-family ubuntu-1604-lts \
+  --image-project=ubuntu-os-cloud \
+  --machine-type=g1-small \
+  --tags puma-server \
+  --restart-on-failure \
+  --metadata startup-script='wget -O - https://gist.githubusercontent.com/whoisfdv/89927ca8e6b8f501dffa2b88c7f9e427/raw/a8073d049d48badb23e514dd06e81764563b3831/startup_script.sh | sudo bash'
+```
+
+###### --metadata-from-file startup-script=CONTENT
+
+```
+# gsutil mb gs://whoisfdv_infra
+# gsutil cp startup_script.sh gs://whoisfdv_infra/ 
+
+# gcloud compute instances create reddit-app\
+  --boot-disk-size=10GB \
+  --image-family ubuntu-1604-lts \
+  --image-project=ubuntu-os-cloud \
+  --machine-type=g1-small \
+  --tags puma-server \
+  --restart-on-failure \
+  --metadata startup-script-url=gs://whoisfdv_infra/startup_script.sh
+```
+
+###### Удаляем/добавляем правила firewall через gcloud
+
+```
+# gcloud --quiet compute firewall-rules delete default-puma-server
+# gcloud --quiet compute firewall-rules create default-puma-server --allow tcp:9292 --target-tags puma-server
+```
+
+Проведено тестирование создания инстансов перечисленными способами. Создание\Удаление инстансов и правил производилось с помощью shell-утилиты `gcloud`.
