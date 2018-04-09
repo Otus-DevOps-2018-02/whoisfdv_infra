@@ -4,13 +4,14 @@ whoisfdv Infra repository
 ## Homework 4 (GCP Bastion)
 
 bastion_IP = 104.155.21.19
+
 someinternalhost_IP = 10.132.0.3
 
 Для подключения к someinternalhost одной командой, требуется настроить _Jumphost_ через bastion.
 Для этого требуется следующая конфигурация SSH:
 
 ```
-$ cat ~/.ssh/config                                                                                                                                                                   ✔  934  21:34:19
+$ cat ~/.ssh/config                                                                                                         
 
 Host bastion
   User appuser
@@ -25,11 +26,12 @@ Host someinternalhost
   ProxyCommand ssh -q -W %h:%p bastion
 ```
 
-После чего для подключения достаточно команды: ```ssh someinternalhost```
+После чего для подключения достаточно команды: `ssh someinternalhost`
 
 ## Homework 5 (GCP testApp)
 
 testapp_IP = 35.205.96.5
+
 testapp_port = 9292
 
 #### Самостоятельное задание
@@ -88,3 +90,16 @@ testapp_port = 9292
 ```
 
 Проведено тестирование создания инстансов перечисленными способами. Создание\Удаление инстансов и правил производилось с помощью shell-утилиты `gcloud`.
+
+## Homework 6 (Packer base)
+
+#### Самостоятельные задания
+ 
+ * В рамках самостоятельного задания некоторые параметры (_project_id_, _source_image_family_, _machine_type_) были вынесены в отдельный файл `variables.json`;
+ * Добавлены дополнительные параметры (_image_description_, _disk_size_, _disk_type_, _network_, _tags_) GCP.
+ 
+#### Задание со *
+ 
+ * Создан дополнительный шаблон `immutable.json`;
+ * Файлы службы `puma.service` размещены в директории `packer/files`;
+ * В `config-scripts` создан скрипт `create-reddit-vm.sh` для создания инстанса из image'а _reddit-full_.
