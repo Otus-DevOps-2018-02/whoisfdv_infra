@@ -103,3 +103,12 @@ testapp_port = 9292
  * Создан дополнительный шаблон `immutable.json`;
  * Файлы службы `puma.service` размещены в директории `packer/files`;
  * В `config-scripts` создан скрипт `create-reddit-vm.sh` для создания инстанса из image'а _reddit-full_.
+
+ ## Homework 7 (Terraform 1)
+
+ #### Самостоятельные задания
+
+  * Определена переменная _private_key_path_;
+  * Определена переменна _zone_ с значением по умолчанию;
+  * Создан шаблон конфига в файле `terraform.tfvars.example`.
+
