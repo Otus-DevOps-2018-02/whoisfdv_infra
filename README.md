@@ -111,3 +111,4 @@ testapp_port = 9292
  * Определена input переменная для приватного ключа _private_key_path_
  * Определена input переменная для задания зоны _zone_
  * Создан файл с описанием переменных _terraform.tfvars.example_
+ 
