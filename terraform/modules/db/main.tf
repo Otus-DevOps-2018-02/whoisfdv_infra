@@ -7,7 +7,7 @@ resource "google_compute_instance" "db" {
     # определение загрузочного диска
     boot_disk {
         initialize_params {
-        image = "${var.db_disk_image}"
+            image = "${var.db_disk_image}"
         }
     }
 
