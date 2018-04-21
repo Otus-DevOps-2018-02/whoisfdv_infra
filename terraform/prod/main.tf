@@ -5,7 +5,7 @@ provider "google" {
 }
 
 module "app" {
-  source = "../modules/app"
+  source           = "../modules/app"
   public_key_path  = "${var.public_key_path}"
   private_key_path = "${var.private_key_path}"
   zone             = "${var.zone}"
@@ -13,13 +13,13 @@ module "app" {
 }
 
 module "db" {
-  source = "../modules/db"
+  source          = "../modules/db"
   public_key_path = "${var.public_key_path}"
   zone            = "${var.zone}"
   db_disk_image   = "${var.db_disk_image}"
 }
 
 module "vpc" {
-  source = "../modules/vpc"
+  source        = "../modules/vpc"
   source_ranges = ["91.226.124.8/32"]
 }
