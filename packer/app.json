@@ -1,0 +1,31 @@
+{
+    "variables": {
+        "project_id": null,
+        "image_name": "reddit-app-base-{{timestamp}}",
+        "image_family": "reddit-app-base",
+        "image_description": "Ubuntu 16.04 with Ruby prebaked for reddit-app"
+    },
+    "builders": [
+        {
+            "type": "googlecompute",
+            "project_id": "{{user `project_id`}}",
+            "image_name": "{{user `image_name`}}",
+            "image_family": "{{user `image_family`}}",
+            "image_description": "{{user `image_description`}}",
+            "source_image_family": "ubuntu-1604-lts",
+            "zone": "europe-west1-b",
+            "ssh_username": "appuser",
+            "machine_type": "f1-micro",
+            "disk_type": "pd-standard",
+            "disk_size": "10",
+            "network": "default"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "script": "scripts/install_ruby.sh",
+            "execute_command": "sudo {{.Path}}"
+        }
+    ]
+}
