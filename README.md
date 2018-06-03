@@ -139,4 +139,22 @@ testapp_port = 9292
 
  #### Задание со *
 
-  * Изменен метод динамического inventory, на с использованием утилиты `terraform-inventory`
+  * Произведена установка утилиты `terraform-inventory`
+  * Изменен метод динамического получения inventory, на метод с использованием `terraform-inventory`
+  * Для корректной работы утилиты, при исполнении плэйбуков ansible указываем путь до state-файла рабочего окружения:
+  `TF_STATE=../terraform/stage/terraform.tfstate ansible-playbook site.yml` 
+
+## Homework 11 (Ansible 3)
+
+#### Самостоятельные задания
+
+ * Произведена организация плэйбуков
+ * Описаны роли `app` и `db` + добавлена роль `jdauphant.nginx` 
+ * Описаны окружения `ansible/environments/prod` и `ansible/environments/stage`
+ * Путем добавления тега `http-server` в описание конфигурации терраформа, добалено открытие 80 порта дли инстанса приложения
+ * Добавлен вызов роли `jdauphant.nginx` в плейбуке `app.yml` 
+ * Проверена работа плэйбука `site.yml` для окружения `stage`, включая доступность приложения по 80 порту
+
+ #### Задание со *
+
+  * Настроено использование динамического inventory для описанных окружений `ansible/environments/stage` и `ansible/environments/prod`. Работа организованна через созданный в ДЗ №9 sh-скрипт `inventory.sh`.
